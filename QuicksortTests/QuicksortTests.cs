@@ -95,12 +95,12 @@ public class QuicksortTests
                 } while (IsSorted(ints));
 
                 Assert.AreEqual(ints.Length, length);
-                Assert.IsFalse(IsSorted(ints));
+                // PARANOIA Assert.IsFalse(IsSorted(ints));
 
-                var sortedInts = new int[length];
-                ints.CopyTo(sortedInts, 0);
+                var sortedInts = ints.ToArray();
 
                 Quicksort.Quicksort.Sort(partition, ints, 0, length - 1);
+
                 Assert.AreEqual(ints.Length, length);
                 Assert.IsTrue(IsSorted(ints));
 
@@ -140,14 +140,13 @@ public class QuicksortTests
                 Assert.AreEqual(ints.Length, length);
                 Assert.IsFalse(IsSorted(ints));
 
-                var sortedInts = new int[length];
-                ints.CopyTo(sortedInts, 0);
+                var sortedInts = ints.ToArray();
                 var random = new Random();
                 var target = random.Next(length);
 
-                Quicksort.Quickselect.Select(partition, ints, 0, 0, target);
+                var retour = Quicksort.Quickselect.Select(partition, ints, 0, 0, target);
                 Assert.AreEqual(ints.Length, length);
-                Assert.AreEqual(sortedInts[target], ints[target]);
+                Assert.AreEqual(sortedInts[target], ints[target], retour);
 
                 IsPermutation(ints, sortedInts);
             }
